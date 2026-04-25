@@ -1,13 +1,14 @@
 # ClipStack
 
-**Clipboard history manager for macOS — search, pin, and recall up to 1000 entries.**
+**Cross-platform clipboard history manager — search, pin, and recall up to 1000 entries.**
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20|%20Windows%20|%20Linux-lightgrey.svg)]()
 
 ## Overview
 
-ClipStack automatically captures clipboard history, letting you search, pin, and recall previous copies. Never lose important clipboard content again.
+ClipStack automatically captures clipboard history on macOS, Windows, and Linux. Never lose important clipboard content again.
 
 **Features:**
 - Background monitoring daemon
@@ -16,16 +17,44 @@ ClipStack automatically captures clipboard history, letting you search, pin, and
 - Pin important entries
 - Auto-classify: URL, code, text
 - Export history
-- macOS LaunchAgent auto-start
+- **Cross-platform auto-start**: macOS LaunchAgent, Windows Startup, Linux systemd
 
 ## Installation
 
 ```bash
+pip install clipstack
+
+# Windows users (optional, for better process management)
+pip install clipstack[windows]
+
+# Or from source
+git clone https://github.com/Francisezhang/clipstack
 cd clipstack
 pip install -e .
 ```
 
-## Quick Start
+## Auto-Start on Login
+
+ClipStack supports auto-start on all platforms:
+
+```bash
+# Register auto-start (platform-specific)
+clipstack start --auto-start
+
+# macOS: Creates LaunchAgent
+# Windows: Creates VBS script in Startup folder
+# Linux: Creates systemd user service
+
+# Unregister
+clipstack stop --unregister
+```
+
+## Requirements
+
+- Python 3.9+
+- pyperclip (auto-installed)
+- Works on: macOS, Windows 10+, Linux (with X11/Wayland clipboard support)
+- Optional on Windows: psutil for better process management
 
 ```bash
 # Start monitoring
@@ -137,8 +166,27 @@ clipstack stop --unregister
 ## Requirements
 
 - Python 3.9+
-- macOS
-- pyperclip
+## Quick Start
+
+```bash
+# Start monitoring
+clipstack start
+
+# List history
+clipstack list
+
+# Search
+clipstack search "keyword"
+
+# Get last entry
+clipstack get last
+
+# Pin an entry
+clipstack pin 5
+
+# Stop monitoring
+clipstack stop
+```
 
 ## License
 
